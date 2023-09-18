@@ -1,0 +1,610 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script>
+      if (document.readyState == 'loading') {
+        document.addEventListener('DOMContentLoaded', ready)
+    } else {
+        ready()
+    }
+    
+    function ready() {
+      var addToCartButtons = document.getElementsByClassName('add-to-cart')
+      console.log(addToCartButtons.length)
+      for (var i = 0; i < addToCartButtons.length; i++) {
+          var button = addToCartButtons[i]
+          button.addEventListener('click', function(event){
+          var buttonclick = event.target
+          var shopItem = buttonclick.parentElement.parentElement.parentElement.parentElement.parentElement
+          var title = shopItem.getElementsByClassName('item-name')[0].innerText
+          var price = shopItem.getElementsByClassName('item-price')[0].innerText
+          var imageSrc = shopItem.getElementsByClassName('item-image')[0].src
+          var form = document.getElementById('our-form')
+            localStorage.setItem('priceofitem',price)
+            localStorage.setItem('nameofitem',title)
+            localStorage.setItem('imgofitem',imageSrc)
+            window.location.href="cart.html";
+      })
+    } }
+  </script>
+  </head>
+  <body>
+    <div>
+      {% if user.is_authenticated %}
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="main.html">Fresh & Organic</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="main.html"
+                >Home <span class="sr-only">(current)</span></a
+              >
+            </li>
+  
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href=""
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Products
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="furits.html">Furits</a>
+                <a class="dropdown-item" href="vegetable.html">Vegetables</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="dryfurits.html">Dryfurits</a>
+                <a class="dropdown-item" href="flowers.html">Flowers</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cart.html">Cart Items</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact Us</a>
+            </li>
+          </ul>
+          <div class="mx-2 dropdown">
+              <a
+                  type="button"
+                  class="btn btn-outline-primary nav-link dropdown-toggle"
+                  id="navbarDropdown1"
+                      role="button"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                >
+                  Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                      <a class="dropdown-item" href="personal.html">Personal Details</a>
+                      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </div>
+            </div>
+          <form class="form-inline my-2 my-lg-0">
+            <input
+              class="form-control mr-sm-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+              Search
+            </button>
+          </form>
+          
+        </div>
+      </nav>
+      {% else %}
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="main.html">Fresh & Organic</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="main.html"
+                >Home <span class="sr-only">(current)</span></a
+              >
+            </li>
+  
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href=""
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Products
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="furits.html">Furits</a>
+                <a class="dropdown-item" href="vegetable.html">Vegetables</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="dryfurits.html">Dryfurits</a>
+                <a class="dropdown-item" href="flowers.html">Flowers</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="cart-page">Cart Items</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact Us</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input
+              class="form-control mr-sm-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+              Search
+            </button>
+          </form>
+          <div class="mx-2">
+            <a href="login.html">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+              >
+                Login
+              </button>
+            </a>
+            <a href="signup.html">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+              >
+                Sign Up
+              </button>
+            </a>
+          </div>
+        </div>
+      </nav>
+      
+      {% endif %}
+  </div>
+  <div>
+    {% block content %}{% endblock %}
+  </div>
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">
+              Login to Fresh & Organic
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                />
+                <small id="emailHelp" class="form-text text-muted"
+                  >We'll never share your email with anyone else.</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  placeholder="Password"
+                />
+              </div>
+              <div class="form-group form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="exampleCheck1"
+                />
+                <label class="form-check-label" for="exampleCheck1"
+                  >Updates on mail</label
+                >
+              </div>
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="signupModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="signupModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="signupModalLabel">
+              Sign Up to Freash & Organic
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                />
+                <small id="emailHelp" class="form-text text-muted"
+                  >We'll never share your email with anyone else.</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  placeholder="Password"
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Confirm Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  placeholder="Password"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <img
+                src="{% static "apple.jpg" %}"
+                class="bd-placeholder-img card-img-top item-image"
+                width="100%"
+                height="225"
+                alt="..."
+              />
+              <div class="card-body">
+                <h2 class="item-name">Apple</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Buy
+                    </button>
+                    <form id="our-form">
+                    <button
+                      type="submit"
+                      class="btn btn-sm btn-outline-secondary add-to-cart"
+                    >
+                      Add to cart
+                    </button>
+                  </form>
+                  </div>
+                  <small class="text-muted item-price">$10</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <img
+                src="{% static "banana.jpg" %}"
+                class="bd-placeholder-img card-img-top item-image"
+                width="100%"
+                height="225"
+                alt="..."
+              />
+              <div class="card-body">
+                <h2 class="item-name">Banana</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Buy
+                    </button>
+                    <form id="our-form">
+                      <button
+                        type="submit"
+                        class="btn btn-sm btn-outline-secondary add-to-cart"
+                      >
+                        Add to cart
+                      </button>
+                    </form>
+                  </div>
+                  <small class="text-muted item-price">Rs.1000/kg</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <img
+                src="{% static "watermelon.jpg" %}"
+                class="bd-placeholder-img card-img-top"
+                width="100%"
+                height="225"
+                alt="..."
+              />
+              <div class="card-body">
+                <h2>Watermelon</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Buy
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Add to cart
+                    </button>
+                  </div>
+                  <small class="text-muted">Rs.1000/kg</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <img
+                src="{% static "starwberries.jpg" %}"
+                class="bd-placeholder-img card-img-top"
+                width="100%"
+                height="225"
+                alt="..."
+              />
+              <div class="card-body">
+                <h2>Strawberries</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Buy
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Add to cart
+                    </button>
+                  </div>
+                  <small class="text-muted">Rs.1000/kg</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <img
+                src="{% static "pineapple.jpg" %}"
+                class="bd-placeholder-img card-img-top"
+                width="100%"
+                height="225"
+                alt="..."
+              />
+              <div class="card-body">
+                <h2>Pineapple</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Buy
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Add to cart
+                    </button>
+                  </div>
+                  <small class="text-muted">Rs.1000/kg</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <img
+                src="{% static "mango.webp" %}"
+                class="bd-placeholder-img card-img-top"
+                width="100%"
+                height="225"
+                alt="..."
+              />
+              <div class="card-body">
+                <h2>Mango</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Buy
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Add to cart
+                    </button>
+                  </div>
+                  <small class="text-muted">Rs.1000/kg</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <img
+                src="{% static "grapes.jpg" %}"
+                class="bd-placeholder-img card-img-top"
+                width="100%"
+                height="225"
+                alt="..."
+              />
+              <div class="card-body">
+                <h2>Grapes</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Buy
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Add to cart
+                    </button>
+                  </div>
+                  <small class="text-muted">Rs.1000/kg</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
