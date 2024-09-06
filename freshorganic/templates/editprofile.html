@@ -1,77 +1,97 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Profile</title>
-    <!-- Add Bootstrap CSS link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% extends 'base.html' %}
+
+{% block extra_css %}
     <style>
-        /* Custom CSS styles */
-        body {
+        /* Custom CSS styles for the profile edit page */
+        .profile-edit-page {
             padding: 20px;
         }
 
-        form {
+        .profile-edit-page form {
             max-width: 500px;
             margin: 0 auto;
         }
 
-        label {
+        .profile-edit-page label {
             font-weight: bold;
         }
 
-        .form-group {
+        .profile-edit-page .form-group {
             margin-bottom: 20px;
         }
 
-        textarea {
+        .profile-edit-page textarea {
             resize: vertical;
         }
 
-        .save-button {
+        .profile-edit-page .save-button {
             margin-top: 10px;
         }
+
+        /* Make the username field look disabled but still visible */
+        .profile-edit-page input[disabled] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
     </style>
-</head>
-<body>
-    <div class="container">
+{% endblock %}
+
+{% block content %}
+    <div class="container profile-edit-page">
         <h1 class="mt-5">Edit Your Profile</h1>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
         <form method="post">
             {% csrf_token %}
+            
+            <!-- Username Field (Disabled) -->
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" name="username" value="{{ profile.user.username }}" required>
+                <label for="username">Username (cannot be changed):</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" disabled>
             </div>
 
+            <!-- Email Field -->
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" value="{{ profile.user.email }}" required>
+                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
             </div>
 
+            <!-- First Name Field -->
             <div class="form-group">
                 <label for="first_name">First Name:</label>
                 <input type="text" class="form-control" id="first_name" name="first_name" value="{{ profile.first_name }}" required>
             </div>
 
+            <!-- Last Name Field -->
             <div class="form-group">
                 <label for="last_name">Last Name:</label>
                 <input type="text" class="form-control" id="last_name" name="last_name" value="{{ profile.last_name }}" required>
             </div>
 
+            <!-- Mobile Number Field -->
             <div class="form-group">
                 <label for="mobile_number">Mobile Number:</label>
                 <input type="text" class="form-control" id="mobile_number" name="mobile_number" value="{{ profile.mobile_number }}" required>
             </div>
 
+            <!-- Address Field -->
             <div class="form-group">
                 <label for="address">Address:</label>
                 <textarea class="form-control" id="address" name="address" required>{{ profile.address }}</textarea>
             </div>
 
-            <button href="personal.html" type="submit" class="btn btn-primary save-button">Save</button>
+            <!-- Save Button -->
+            <button type="submit" class="btn btn-primary save-button">Save</button>
 
-            <!-- Add a button to change password -->
-            <a href="changepswd.html" class="btn btn-primary save-button">Change Password</a>
+            <!-- Change Password Button -->
+            <a href="changepswd.html" class="btn btn-warning save-button">Change Password</a>
         </form>
     </div>
-</body>
-</html>
+{% endblock %}
+
+{% block extra_js %}{% endblock %}

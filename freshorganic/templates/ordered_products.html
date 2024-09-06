@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Your Ordered Products</h1>
+        
+        {% if orders %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Order Date</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Action</th>  <!-- Added column for actions -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td>{{ order.product.name }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.order_date }}</td>
+                            <td>${{ order.product.price }}</td>
+                            <td>
+                                {% if order.is_paid %}
+                                    Paid
+                                {% else %}
+                                    Pending
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if not order.is_paid %}
+                                    <form action="{% url 'pay_for_order' order.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">Pay Now</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No orders found.</p>
+        {% endif %}
+    </div>
+{% endblock %}
