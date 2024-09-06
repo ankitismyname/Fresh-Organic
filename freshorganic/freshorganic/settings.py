@@ -11,6 +11,18 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mamulalhere@gmail.com'
+EMAIL_HOST_PASSWORD = 'paui wpiu lrqt zwom'
+DEFAULT_FROM_EMAIL = 'mamulalhere@gmail.com'
+CONTACT_EMAIL = 'mamulalhere@gmail.com'  # The email address where you'll receive contact messages
+
+# Stripe Configuration
+STRIPE_TEST_PUBLIC_KEY = 'pk_test_51Pw3UqP6Eud89u20JwhZACA8eeceJXE8HNL1zFWx7lAaKJXxMbuPGe8PZJJh7hXwUGWCSijSZMVUZ1SjwKSngEDS00tnZd80Wn'
+STRIPE_TEST_SECRET_KEY = 'sk_test_51Pw3UqP6Eud89u20BAUUFKJKvJQL7V3zsTz5GtQoPA2pYPRsLRRYpqIYXJK6EBlfW5pmhCBNuZEjtQC56rBAOD8V00HzZO4FZz'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
