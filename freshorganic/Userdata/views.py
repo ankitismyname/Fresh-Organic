@@ -15,7 +15,7 @@ from django.conf import settings
 def ordered_products(request):
     # Fetch orders for the logged-in user
     orders = ProductOrder.objects.filter(user=request.user).order_by('-order_date')
-    
+
     context = {
         'orders': orders,
     }
@@ -32,10 +32,10 @@ def pay_for_order(request, order_id):
 
         if order.is_paid:
             return redirect('order_summary')  # If already paid, redirect to the summary page
-        
+
         # Handle online payment with Stripe
-        total_amount = int(order.product.price * 100)  # Amount in cents
-        
+        total_amount = int(order.product.price * order.quantity)+5  # Amount in cents
+
         session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[{
@@ -44,7 +44,7 @@ def pay_for_order(request, order_id):
                     'product_data': {
                         'name': f'Order {order_id} Payment',
                     },
-                    'unit_amount': total_amount,  # Amount in cents
+                    'unit_amount': int(total_amount * 100),  # Amount in cents
                 },
                 'quantity': 1,
             }],
@@ -52,10 +52,10 @@ def pay_for_order(request, order_id):
             success_url=request.build_absolute_uri(f'/payment-success/{order_id}/'),
             cancel_url=request.build_absolute_uri('/cancel/'),
         )
-        
+
         return redirect(session.url, code=303)
 
-    return render(request, 'pay_for_order.html', {'order': ProductOrder.objects.get(id=order_id, user=request.user)})
+    return render(request, 'main.html', {'order': ProductOrder.objects.get(id=order_id, user=request.user)})
 
 
 def payment_success(request, order_id):
@@ -64,7 +64,7 @@ def payment_success(request, order_id):
     if not order.is_paid:
         order.is_paid = True
         order.save()
-    
+
     return render(request, 'success.html')
 
 def checkout(request):
@@ -83,7 +83,7 @@ def checkout(request):
             # Handle online payment with Stripe
             cart_items = ShoppingCartItem.objects.filter(user=request.user)
             total_amount = sum(item.product.price * item.quantity for item in cart_items)
-            
+
             session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
                 line_items=[{
@@ -102,7 +102,7 @@ def checkout(request):
             )
             return redirect(session.url, code=303)
 
-    return render(request, 'checkout.html')
+    return render(request, 'main.html')
 
 
 def success(request):
@@ -111,7 +111,7 @@ def success(request):
 
     # Get all cart items for the current user
     cart_items = ShoppingCartItem.objects.filter(user=request.user)
-    
+
     # Iterate through cart items to create ProductOrder and update Product quantity
     for item in cart_items:
         # Create a ProductOrder record
@@ -121,12 +121,12 @@ def success(request):
             quantity=item.quantity,
             is_paid=(payment_status == 'online')  # Set to True if online payment was successful
         )
-        
+
         # Update Product quantity
         product = item.product
         product.quantity -= item.quantity
         product.save()
-    
+
     # Clear the cart items after successful processing
     cart_items.delete()
 
@@ -170,7 +170,7 @@ def signup(request):
                 first_name=first_name,
                 last_name=last_name
             )
-            
+
             profile = UserProfile.objects.get(user=user)
             profile.mobile_number = request.POST['mobile_number']
             profile.address = request.POST['address']
@@ -203,7 +203,7 @@ def editprofile(request):
 
         # Update User model's email field (excluding username since it's not editable)
         user.email = request.POST['email']
-        
+
         # Save changes to the user and profile models
         user.save()
         profile.save()
@@ -284,7 +284,7 @@ def vegetables(request):
     else:
         # Fetch all products where the category is 'vegetables'
         vegetable_products = Product.objects.filter(category='vegetables')
-    
+
     return render(request, 'vegetable.html', {'products': vegetable_products})
 
 def dry_fruits(request):
@@ -295,7 +295,7 @@ def dry_fruits(request):
     else:
         # Fetch all products where the category is 'dry fruits'
         dry_fruit_products = Product.objects.filter(category='dry_fruits')
-    
+
     return render(request, 'dryfruits.html', {'products': dry_fruit_products})
 
 
@@ -307,7 +307,7 @@ def fruits(request):
     else:
         # Fetch all products where the category is 'fruits'
         fruit_products = Product.objects.filter(category='fruits')
-    
+
     return render(request, 'fruits.html', {'products': fruit_products})
 
 def flowers(request):
@@ -318,7 +318,7 @@ def flowers(request):
     else:
         # Fetch all products where the category is 'fruits'
         fruit_products = Product.objects.filter(category='flowers')
-    
+
     return render(request, 'flowers.html', {'products': fruit_products})
 
 
@@ -374,11 +374,11 @@ def add_to_cart(request, product_id):
 def product_detail(request, product_id, product_name):
     # Get the product by id
     product = get_object_or_404(Product, pk=product_id)
-    
+
     # Ensure the product name matches the given name
     if product_name != product.name.replace(' ', '-').lower():
         return redirect('product_detail', product_id=product.id, product_name=product.name.replace(' ', '-').lower())
-    
+
     # Render the product detail page with the selected product
     return render(request, 'product_details.html', {'product': product})
 
@@ -403,7 +403,7 @@ def view_cart(request):
         'shipping': shipping,
         'total': total,
              }
-  
+
     return render(request, 'view_cart.html', context)
 
 
@@ -413,14 +413,14 @@ def update_quantity(request, item_id):
 
     if request.method == 'POST':
         action = request.POST.get('action')
-        
+
         if action == 'decrease':
             # Decrease quantity, but not below 1
             cart_item.quantity = max(cart_item.quantity - 1, 1)
         elif action == 'increase':
             # Check if the product is out of stock or if max limit reached
             max_quantity = min(10, product.quantity)
-            
+
             if cart_item.quantity >= max_quantity:
                 # Set an error message and don't increase the quantity
                 messages.error(request, "Cannot add more of this product. Stock limit reached.")
