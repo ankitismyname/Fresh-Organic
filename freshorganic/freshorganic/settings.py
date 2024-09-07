@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -35,9 +36,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^9yi*1eb%%5!3(=e#cn)h*j5zb&0+=ow)fkquw!uf%aq975$o7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -69,7 +70,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # new line
-        "DIRS": [BASE_DIR, "templates"],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         "OPTIONS": {
             "context_processors": [
@@ -131,17 +132,24 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+# settings.py
+STATIC_URL = '/static/'  # Already set correctly
 
-STATIC_URL = 'static/'
+# Directory where Django will collect all static files for production
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  
+
+# Additional directories where Django looks for static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Add the directory where images are present
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+
 
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
