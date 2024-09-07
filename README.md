@@ -1,4 +1,4 @@
-# E-Commerce Website Project
+# Fresh&Organic E-Commerce Website Project
 
 Welcome to the **E-Commerce Website Project**! This project demonstrates a fully functional online store where users can browse products, manage their shopping cart, and access personalized profiles.
 
@@ -30,7 +30,50 @@ Welcome to the **E-Commerce Website Project**! This project demonstrates a fully
 
 To run the project locally, follow these steps:
 
-### Clone the repository:
+1. **Clone the repository and navigate to the project directory**:
 
-```bash
-git clone https://github.com/ankitismyname/Fresh-Organic.git
+    ```bash
+    git clone https://github.com/ankitismyname/Fresh-Organic.git && cd Fresh-Organic
+    ```
+
+2. **Set up a virtual environment** (optional but recommended):
+
+    ```bash
+    python -m venv env
+    source env/bin/activate   # On Windows use `env\Scripts\activate`
+    ```
+
+3. **Install the required dependencies**:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. **Run the development server**:
+
+    ```bash
+    python manage.py runserver
+    ```
+
+5. **Open your web browser** and visit `http://127.0.0.1:8000/` to explore the website.
+
+---
+
+## Acknowledgments
+
+- Special thanks to the **Django** and **Bootstrap** communities for their amazing tools and resources.
+
+For more information, please visit the [project page](https://github.com/ankitismyname/Fresh-Organic).
+
+---
+
+### Features Overview:
+
+- **Secure Authentication**: PBKDF2_SHA256 encryption and CSRF tokens for safe login/logout.
+- **Hybrid User Model**: Verified users can manage products as sellers (CRUD operations).
+- **Payment Integration**: Stripe payments with COD option (Rs.5 additional charge).
+- **Customer Support**: 24/7 email-based system.
+
+---
+
+**Tech Stack**: Django, PBKDF2_SHA256, CSRF Tokens, Stripe, Bootstrap, HTML.
