@@ -146,8 +146,8 @@
         <tr>
             <th>Product</th>
             <th>Image</th>
-            <th>Price</th>
-            <th>Quantity</th>
+            <th>Price/kg</th>
+            <th>Weight (in Kg)</th>
             <th>Subtotal</th>
             <th>Actions</th>
         </tr>
@@ -157,7 +157,7 @@
         <tr>
             <td>{{ item.product.name }}</td>
             <td><img src="{{ item.product.proimage }}" alt="Product Image" class="product-image"></td>
-            <td class="price">${{ item.product.price }}</td>
+            <td class="price">Rs.{{ item.product.price }}</td>
             <td class="quantity">
                 <form method="post" action="{% url 'update_quantity' item.id %}">
                     {% csrf_token %}
@@ -166,23 +166,23 @@
                     <button type="submit" name="action" value="increase">+</button>
                 </form>
             </td>
-            <td class="subtotal">${{ item.subtotal }}</td>
+            <td class="subtotal">Rs.{{ item.subtotal }}</td>
             <td class="actions"><a href="{% url 'remove_from_cart' item.id %}">Remove</a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 <div id="total-section">
-    <p>Subtotal: <span id="subtotal">${{ subtotal }}</span></p>
-    <p>For Cash on Delivery: <span id="shipping">${{ shipping }}</span></p>
-    <p>Total: <span id="total">${{ total }}</span></p>
+    <p>Subtotal: <span id="subtotal">Rs.{{ subtotal }}</span></p>
+    <p>For Cash on Delivery: <span id="shipping">Rs.{{ shipping }}</span></p>
+    <p>Total: <span id="total">Rs.{{ total }}</span></p>
 </div>
 
 <!-- Checkout Form -->
 <div class="checkout-button">
     <form method="post" action="{% url 'checkout' %}">
         {% csrf_token %}
-        
+
         <!-- Add COD option -->
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="cod" name="cod">
@@ -190,7 +190,7 @@
                 Cash on Delivery
             </label>
         </div>
-        
+
         <button type="submit">Checkout</button>
     </form>
 </div>

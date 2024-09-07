@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
         <h1>Your Products</h1>
-        
+
         <!-- Search Form -->
         <form method="get" action="{% url 'userproducts' %}" class="mb-4">
             <div class="input-group">
@@ -21,15 +21,15 @@
             {% endfor %}
         </div>
         {% endif %}
-        
+
         {% if products %}
             <table class="table">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Image</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
+                        <th>Price/kg</th>
+                        <th>Weight (in Kg)</th>
                         <th>Category</th>
                         <th>Description</th> <!-- Added Description column -->
                         <th>Edit</th>
@@ -39,7 +39,7 @@
                 <tbody>
                     {% for product in products %}
                         <tr>
-                            <td>{{ product.name }}</td>
+                            <td class="name-cell">{{ product.name }}</td> <!-- Added truncation for name -->
                             <td>
                                 {% if product.proimage %}
                                     <img src="{{ product.proimage }}" alt="Image of {{ product.name }}" width="50">
@@ -47,7 +47,7 @@
                                     No image
                                 {% endif %}
                             </td>
-                            <td>${{ product.price }}</td>
+                            <td>Rs.{{ product.price }}</td>
                             <td>{{ product.quantity }}</td>
                             <td>{{ product.get_category_display }}</td>
                             <td class="description-cell">{{ product.description }}</td> <!-- Added Description field -->
@@ -67,7 +67,7 @@
         {% else %}
             <p>No products found.</p>
         {% endif %}
-    
+
         <!-- Button to add a new product -->
         <a href="{% url 'addproduct' %}" class="btn btn-success">Add New Product</a>
     </div>
@@ -75,7 +75,7 @@
 
 {% block extra_css %}
 <style>
-    .description-cell {
+    .description-cell, .name-cell {
         max-width: 200px; /* Adjust width as needed */
         white-space: nowrap;
         overflow: hidden;
