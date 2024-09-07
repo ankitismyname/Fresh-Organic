@@ -394,7 +394,7 @@ def view_cart(request):
         item.subtotal = item_subtotal  # Add subtotal to each cart item
         subtotal += item.product.price * item.quantity
 
-    shipping = Decimal('1.00')  # Assuming a flat shipping rate of $5.00
+    shipping = Decimal('5.00')  # Assuming a flat shipping rate of $5.00
     total = subtotal + shipping
 
     context = {
