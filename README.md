@@ -1,71 +1,55 @@
+E-Commerce Website Project
+Welcome to the E-Commerce Website Project! This project demonstrates a fully functional online store where users can browse products, manage their shopping cart, and access personalized profiles.
 
-# Fresh Organic
+Features
+Shopping Cart System: Users can add items to their cart, view the cart, and proceed to checkout. Cart allows up to 10 kg of a single product.
+Login/Logout System: Secure user authentication with PBKDF2_SHA256 encryption and CSRF protection.
+User Profile Pages: Users can edit details, change passwords, and view order history.
+Seller Functionality: Verified users can become sellers, performing all CRUD operations on their products.
+Payment Gateway: Integrated Stripe for secure online payments, with Cash on Delivery (COD) as an option (additional Rs.5 for COD).
+Contact Support: Email-based system for reporting issues or seeking assistance with 24/7 support.
+Technologies Used
+HTML: For structuring and presenting content.
+CSS: For styling and layout of the website.
+Bootstrap: Ensures a responsive design with pre-built components.
+DOM API: For dynamic content updates.
+Django: Backend framework to manage server-side logic and database operations.
+PBKDF2_SHA256 & CSRF Tokens: Secure authentication and form protection.
+Stripe: Payment integration.
+Tools Used
+Visual Studio Code: Development environment.
+Web Browser: Testing and interacting with the website.
+Getting Started
+To run the project locally, follow these steps:
 
-Welcome to the **Fresh Organic** e-commerce website project! This project showcases a fully functional online store where users can browse products, add items to their shopping cart, and manage their profiles. 
+Clone the repository:
 
-## Features
+bash
+Copy code
+git clone https://github.com/ankitismyname/Fresh-Organic.git
+Navigate to the project directory:
 
-- **Shopping Cart System**: Users can add items to their cart, view the cart, and proceed to checkout.
-- **Login/Logout System**: Users can create accounts, log in, and log out securely.
-- **User Profile Pages**: Each user has a personalized profile page to manage their account details.
-- **User Shopping Cart Page**: Users can view and manage their shopping cart items on a dedicated page.
+bash
+Copy code
+cd Fresh-Organic
+Set up a virtual environment (optional but recommended):
 
-## Technologies Used
+bash
+Copy code
+python -m venv env
+source env/bin/activate   # On Windows use `env\Scripts\activate`
+Install the required dependencies:
 
-- **HTML**: Structure and content of the website.
-- **CSS**: Styling and layout of the website.
-- **Bootstrap**: Responsive design and pre-built components.
-- **DOM API**: Dynamic content manipulation.
-- **Django**: Backend framework for handling server-side logic and database interactions.
+bash
+Copy code
+pip install -r requirements.txt
+Run the development server:
 
-## Tools Used
+bash
+Copy code
+python manage.py runserver
+Open your web browser and visit http://127.0.0.1:8000/ to explore the website.
 
-- **Visual Studio Code**: Code editor used for development.
-- **Web Browser**: For testing and viewing the website.
-
-## Getting Started
-
-To get a local copy up and running, follow these steps:
-
-1. **Clone the repository**:
-
-   ```bash
-   git clone https://github.com/ankitismyname/Fresh-Organic.git
-   ```
-
-2. **Navigate to the project directory**:
-
-   ```bash
-   cd Fresh-Organic
-   ```
-
-3. **Set up a virtual environment** (optional but recommended):
-
-   ```bash
-   python -m venv env
-   source env/bin/activate   # On Windows use `env\Scripts\activate`
-   ```
-
-4. **Install the required dependencies**:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-5. **Run the development server**:
-
-   ```bash
-   python manage.py runserver
-   ```
-
-6. **Open your web browser** and go to `http://127.0.0.1:8000/` to see the website in action.
-
-
-## Acknowledgments
-
-- Thanks to the Django and Bootstrap communities for their fantastic tools and resources.
-
-For more information, please visit the [project page](https://github.com/ankitismyname/Fresh-Organic).
-
----
-
+Acknowledgments
+Special thanks to the Django and Bootstrap communities for their fantastic tools and resources.
+For more information, please visit the project page.
