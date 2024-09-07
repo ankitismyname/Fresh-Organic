@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
         <h1>Your Ordered Products</h1>
-        
+
         {% if orders %}
             <table class="table">
                 <thead>
@@ -11,9 +11,10 @@
                         <th>Product</th>
                         <th>Quantity</th>
                         <th>Order Date</th>
-                        <th>Price</th>
+                        <th>Unit Price</th>
+                        <th>Total Price</th>
                         <th>Status</th>
-                        <th>Action</th>  <!-- Added column for actions -->
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,7 +23,8 @@
                             <td>{{ order.product.name }}</td>
                             <td>{{ order.quantity }}</td>
                             <td>{{ order.order_date }}</td>
-                            <td>${{ order.product.price }}</td>
+                            <td>Rs. {{ order.product.price|floatformat:2 }}</td>
+                            <td id="total-price-{{ order.id }}">Rs. </td> <!-- Placeholder for total price -->
                             <td>
                                 {% if order.is_paid %}
                                     Paid
@@ -42,6 +44,19 @@
                     {% endfor %}
                 </tbody>
             </table>
+
+            <!-- JavaScript to calculate total prices -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    {% for order in orders %}
+                        var price = {{ order.product.price|floatformat:2 }};
+                        var quantity = {{ order.quantity }};
+                        var totalPrice = price * quantity;
+                        document.getElementById("total-price-{{ order.id }}").textContent = 'Rs. ' + totalPrice.toFixed(2);
+                    {% endfor %}
+                });
+            </script>
+
         {% else %}
             <p>No orders found.</p>
         {% endif %}
