@@ -55,7 +55,7 @@ To run the project locally, follow these steps:
     python manage.py runserver
     ```
 
-5. **Open your web browser** and visit `http://127.0.0.1:8000/` to explore the website.
+5. **Open your web browser** and [visit site](https://mehere.pythonanywhere.com) to explore the website.
 
 ---
 
