@@ -67,13 +67,4 @@ For more information, please visit the [project page](https://github.com/ankitis
 
 ---
 
-### Features Overview:
-
-- **Secure Authentication**: PBKDF2_SHA256 encryption and CSRF tokens for safe login/logout.
-- **Hybrid User Model**: Verified users can manage products as sellers (CRUD operations).
-- **Payment Integration**: Stripe payments with COD option (Rs.5 additional charge).
-- **Customer Support**: 24/7 email-based system.
-
----
-
 **Tech Stack**: Django, PBKDF2_SHA256, CSRF Tokens, Stripe, Bootstrap, HTML.
