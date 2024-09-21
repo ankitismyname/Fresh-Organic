@@ -65,6 +65,4 @@ To run the project locally, follow these steps:
 
 For more information, please visit the [project page](https://github.com/ankitismyname/Fresh-Organic).
 
----
 
-**Tech Stack**: Django, PBKDF2_SHA256, CSRF Tokens, Stripe, Bootstrap, HTML.
