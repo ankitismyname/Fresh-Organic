@@ -4,12 +4,12 @@ Welcome to the **E-Commerce Website Project**! This project demonstrates a fully
 
 ## Features
 
-- **Shopping Cart System**: Users can add items to their cart, view the cart, and proceed to checkout. Cart allows up to 10 kg of a single product.
+- **Shopping Cart System**: Users can add items to their cart, view the cart, and proceed to checkout. Cart allows up to a limited quantity of a single product.
 - **Login/Logout System**: Secure user authentication with PBKDF2_SHA256 encryption and CSRF protection.
 - **User Profile Pages**: Users can edit details, change passwords, and view order history.
 - **Seller Functionality**: Verified users can become sellers, performing all CRUD operations on their products.
-- **Payment Gateway**: Integrated Stripe for secure online payments, with Cash on Delivery (COD) as an option (additional Rs.5 for COD).
-- **Contact Support**: Email-based system for reporting issues or seeking assistance with 24/7 support.
+- **Payment Gateway**: Integrated Stripe for secure online payments, with Cash on Delivery (COD) as an option with additional charges.
+- **Contact Support**: Email-based system for reporting issues or seeking assistance with support.
 
 ### Technologies Used
 
