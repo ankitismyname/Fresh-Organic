@@ -81,4 +81,3 @@ We welcome contributions to this project! Here's how you can get involved:
 
 - Many thanks to the **Django** and **Bootstrap** communities for their extensive resources and support.
 
-For more details, please visit the [GitHub page](https://github.com/ankitismyname/Fresh-Organic).
